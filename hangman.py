@@ -1,5 +1,5 @@
 from importlib import import_module
-from data import *
+from data import title, you_win, you_loose
 import os, random
 
 def game(player_list, target):
@@ -9,19 +9,19 @@ def game(player_list, target):
     hanged = list(hanged)
     
     while x:
-        os.system('cls') #Clear the terminal
+        os.system('cls')
         print (title)
         print (" ".join(player_list)) #Show the _ _ _ to guess the word
-        print (" ".join(hanged[:y:])) #Show the _ _ _ when you loose the game
+        print (" ".join(hanged[:y:])) #Show text: #-HANGED-# progressively if you fail one letter
         if player_list == target:
             print (you_win)
             break
-        letter = input(str("Insert a letter and press enter: ")) #ask for a letter
-        if letter in target: #if letter exist (at least one occurrence)
-            for i in range(len(target)): #we put any occurrence in every index
+        letter = input(str("Insert a letter and press enter: "))
+        if letter in target:
+            for i in range(len(target)):
                 if target[i] == letter:
-                    player_list.pop(i) #clear the _
-                    player_list.insert(i, letter) #put the letter instead
+                    player_list.pop(i) #clear underscore in that position
+                    player_list.insert(i, letter) #...put correct letter instead
         else:
             y += 1
             if y == 12:
@@ -37,8 +37,8 @@ def run():
         word = [line.strip() for line in f]
     target = random.choice(word)
     target = list(target)
-    player_list = ["_" for i in range(len(target))]
-    game (player_list, target)
+    player_list = ["_" for i in range(len(target))] #Create the _ _ _
+    game(player_list, target)
 
     
 if __name__ == '__main__':
